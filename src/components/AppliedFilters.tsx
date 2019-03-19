@@ -3,6 +3,7 @@ import { FilterStoreContext } from "../stores/provider";
 import { observer } from "mobx-react-lite";
 import FilterOption from "./FilterOption";
 import styles from "./AppliedFilters.module.css";
+import categoryStyles from "./FilterCategory.module.css";
 
 interface AppliedFiltersProps {}
 
@@ -23,6 +24,14 @@ const AppliedFilters: React.FunctionComponent<AppliedFiltersProps> = observer(
             />
           );
         })}
+        {!!filterStore.appliedFilters.length && (
+          <div
+            className={categoryStyles.container}
+            onClick={() => filterStore.clearAll()}
+          >
+            Clear all
+          </div>
+        )}
       </div>
     );
   }

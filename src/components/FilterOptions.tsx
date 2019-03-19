@@ -2,7 +2,7 @@ import React from "react";
 import { IFilterOption } from "../data/filter-options";
 import FilterOption from "./FilterOption";
 import styles from "./FilterOptions.module.css";
-import { useFilterOptions } from "../hocs/userFilterOption";
+import { useFilterOptions } from "../hocs/useFilterOption";
 
 interface FilterOptionsProps {
   options: IFilterOption[];

@@ -46,7 +46,7 @@ export default class FilterStore {
   }
 
   @action
-  selectCategory(category: string) {
+  selectCategory(category: string | null) {
     this.selectedCategory =
       this.selectedCategory === category ? null : category;
   }
@@ -66,5 +66,10 @@ export default class FilterStore {
     } = this.selectedFilters[category];
 
     this.selectedFilters[category] = remainingOptions;
+  }
+
+  @action
+  clearAll() {
+    this.selectedFilters = {};
   }
 }
