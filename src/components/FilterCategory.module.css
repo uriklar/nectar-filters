@@ -1,0 +1,16 @@
+.wrapper {
+  position: relative;
+}
+
+.container {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 25px;
+  padding: 5px;
+  white-space: nowrap;
+}
