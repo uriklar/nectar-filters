@@ -11,7 +11,10 @@ const DropdownContainer: React.FunctionComponent<
   const isMobile = useMedia(MOBILE_MEDIA_QUERY);
 
   return (
-    <div className={`${styles.container} ${isMobile ? styles.mobile : ""}`}>
+    <div
+      className={`${styles.container} ${isMobile ? styles.mobile : ""}`}
+      data-testid="dropdown-container"
+    >
       {props.children}
     </div>
   );

@@ -2,11 +2,6 @@ import { IFilterOption } from "./../data/filter-options";
 import { observable, action, computed } from "mobx";
 import { TFilters } from "../data/filter-options";
 
-interface AppliedFilter {
-  category: string;
-  option: IFilterOption;
-}
-
 export default class FilterStore {
   @observable options: TFilters;
   @observable selectedCategory: string | null = null;
