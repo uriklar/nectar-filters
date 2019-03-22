@@ -44,14 +44,6 @@ const renderComponent = ({ category, options }) => {
   return render(<FilterCategory category={category} options={options} />);
 };
 
-afterEach(() => {
-  jest.resetModules();
-});
-
-beforeEach(() => {
-  jest.mock("fs");
-});
-
 test("should show dropdown after clicking category title", () => {
   const { getByTestId, getByText, queryByTestId } = renderComponent({
     category: "quality",
