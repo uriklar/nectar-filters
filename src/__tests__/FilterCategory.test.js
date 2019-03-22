@@ -1,6 +1,5 @@
 import React from "react";
 
-import FilterStore from "../stores/filter.store";
 import { render, fireEvent } from "react-testing-library";
 import FilterCategory from "../components/FilterCategory";
 
@@ -17,20 +16,40 @@ const OPTIONS = {
   ]
 };
 
-let filterStore;
-let FilterStoreContext;
+jest.mock("../stores/provider", () => {
+  const React = require("react");
+  const FilterStore = require("../stores/filter.store").default;
+
+  const OPTIONS = {
+    size: [
+      { id: "s", title: "S" },
+      { id: "m", title: "M" },
+      { id: "l", title: "L" }
+    ],
+    quality: [
+      { id: "high", title: "High" },
+      { id: "medium", title: "Medium" },
+      { id: "low", title: "Low" }
+    ]
+  };
+
+  debugger;
+  const FilterStoreContext = React.createContext(new FilterStore(OPTIONS));
+  return {
+    FilterStoreContext
+  };
+});
 
 const renderComponent = ({ category, options }) => {
-  return render(
-    <FilterStoreContext.Provider value={filterStore}>
-      <FilterCategory category={category} options={options} />
-    </FilterStoreContext.Provider>
-  );
+  return render(<FilterCategory category={category} options={options} />);
 };
 
+afterEach(() => {
+  jest.resetModules();
+});
+
 beforeEach(() => {
-  filterStore = new FilterStore(OPTIONS);
-  FilterStoreContext = React.createContext(filterStore);
+  jest.mock("fs");
 });
 
 test("should show dropdown after clicking category title", () => {
@@ -42,7 +61,6 @@ test("should show dropdown after clicking category title", () => {
   expect(queryByTestId("dropdown-container")).toBeNull();
 
   fireEvent.click(getByText(/quality/i));
-
   expect(getByTestId("dropdown-container")).toBeTruthy();
 });
 test("should show dropdown with correct options", () => {
