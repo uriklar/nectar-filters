@@ -44,42 +44,44 @@ const renderComponent = ({ category, options }) => {
   return render(<FilterCategory category={category} options={options} />);
 };
 
-test("should show dropdown after clicking category title", () => {
-  const { getByTestId, getByText, queryByTestId } = renderComponent({
-    category: "quality",
-    options: OPTIONS.quality
+describe("FilterCategory", () => {
+  test("should show dropdown after clicking category title", () => {
+    const { getByTestId, getByText, queryByTestId } = renderComponent({
+      category: "quality",
+      options: OPTIONS.quality
+    });
+
+    expect(queryByTestId("dropdown-container")).toBeNull();
+
+    fireEvent.click(getByText(/quality/i));
+    expect(getByTestId("dropdown-container")).toBeTruthy();
+  });
+  test("should show dropdown with correct options", () => {
+    const { getByText, queryByTestId } = renderComponent({
+      category: "size",
+      options: OPTIONS.size
+    });
+
+    expect(queryByTestId("dropdown-container")).toBeNull();
+
+    fireEvent.click(getByText(/size/i));
+
+    expect(getByText(/M/i)).toBeTruthy();
   });
 
-  expect(queryByTestId("dropdown-container")).toBeNull();
+  test("should close dropdown when clicking title again", () => {
+    const { getByTestId, getByText, queryByTestId } = renderComponent({
+      category: "quality",
+      options: OPTIONS.quality
+    });
 
-  fireEvent.click(getByText(/quality/i));
-  expect(getByTestId("dropdown-container")).toBeTruthy();
-});
-test("should show dropdown with correct options", () => {
-  const { getByText, queryByTestId } = renderComponent({
-    category: "size",
-    options: OPTIONS.size
+    expect(queryByTestId("dropdown-container")).toBeNull();
+
+    fireEvent.click(getByText(/quality/i));
+
+    expect(getByTestId("dropdown-container")).toBeTruthy();
+
+    fireEvent.click(getByText(/quality/i));
+    expect(queryByTestId("dropdown-container")).toBeNull();
   });
-
-  expect(queryByTestId("dropdown-container")).toBeNull();
-
-  fireEvent.click(getByText(/size/i));
-
-  expect(getByText(/M/i)).toBeTruthy();
-});
-
-test("should close dropdown when clicking title again", () => {
-  const { getByTestId, getByText, queryByTestId } = renderComponent({
-    category: "quality",
-    options: OPTIONS.quality
-  });
-
-  expect(queryByTestId("dropdown-container")).toBeNull();
-
-  fireEvent.click(getByText(/quality/i));
-
-  expect(getByTestId("dropdown-container")).toBeTruthy();
-
-  fireEvent.click(getByText(/quality/i));
-  expect(queryByTestId("dropdown-container")).toBeNull();
 });
